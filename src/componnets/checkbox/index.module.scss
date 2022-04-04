@@ -1,0 +1,34 @@
+@import 'styles/global.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+
+  .checkbox {
+    margin: 0px;
+    margin-right: 16px;
+    width: 22px;
+    height: 22px;
+    border: 3px solid $primary;
+    border-radius: 6px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      //   background-color: $primary;
+      background: url('../../assets/images/checked-icon.svg') $primary;
+      background-position: center center;
+      background-size: 12px;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: $black-2;
+  }
+}

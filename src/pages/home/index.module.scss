@@ -1,11 +1,11 @@
 @import 'styles/global.scss';
 
 .container {
-  background-color: $gray-1;
-  width: 720px;
+  max-width: 720px;
   margin: auto;
   border-radius: 20px;
   padding: 61px 101px;
+  background-color: $gray-1;
 
   .task {
     margin-top: 33px;

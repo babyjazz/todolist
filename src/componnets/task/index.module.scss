@@ -8,4 +8,14 @@
   background-color: $white;
   border-radius: 9999px;
   height: 46px;
+
+  .menu {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
