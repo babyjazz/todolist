@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import styles from './index.module.scss'
 
 export default function Select({ options }) {
+  const toggleRef = useRef()
+  const listRef = useRef()
   const [visible, setVisible] = useState(false)
   const [selected, setSelected] = useState(options?.[0])
 
   const handleClickOutside = (e) => {
     if (
-      !e.target.classList.contains('options') &&
-      !e.target.classList.contains('option')
+      toggleRef.current &&
+      !toggleRef.current.contains(e.target) &&
+      listRef.current &&
+      !listRef.current.contains(e.target)
     ) {
       setVisible(false)
     }
@@ -33,27 +37,31 @@ export default function Select({ options }) {
 
   return (
     <div className={styles.container}>
-      <button type="button" className={styles.select} onClick={toggleVisible}>
+      <button
+        ref={toggleRef}
+        type="button"
+        className={styles.select}
+        onClick={toggleVisible}
+      >
         {selected?.label}
       </button>
       {visible && (
         <ul
-          className={cx(styles.options, 'options')}
+          className={styles.options}
           tabIndex={-1}
           data-visible={visible}
+          ref={listRef}
         >
           {options?.map((opt) => (
             <li
               key={opt?.value}
               onClick={() => handleSelectValue(opt)}
-              className={cx(styles.option, 'option', {
+              className={cx(styles.option, {
                 [styles.active]:
                   selected?.value && selected?.value === opt?.value,
               })}
             >
-              <option value={opt?.value} className="option">
-                {opt?.label}
-              </option>
+              <option value={opt?.value}>{opt?.label}</option>
             </li>
           ))}
         </ul>

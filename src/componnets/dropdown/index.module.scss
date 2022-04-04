@@ -1,0 +1,39 @@
+@import 'styles/global.scss';
+
+.list_action {
+  &:hover {
+    cursor: pointer;
+  }
+
+  .list_group {
+    position: absolute;
+    margin-top: 6px;
+    margin-left: -50px;
+    padding: 16px 22px;
+    background-color: $white;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    min-width: 40px;
+
+    .list {
+      list-style: none;
+      padding: 8px 0;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: capitalize;
+
+      &:hover {
+        color: $secondary;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
