@@ -1,9 +1,12 @@
+import styles from './index.module.scss'
+
 export default function Selection() {
   return (
-    <div>
-      <select>
-        <option>test1</option>
-        <option>test2</option>
+    <div className={styles.container}>
+      <select className={styles.selection}>
+        <option>All</option>
+        <option>Done</option>
+        <option>Undone</option>
       </select>
     </div>
   )
