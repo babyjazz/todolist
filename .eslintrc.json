@@ -21,7 +21,6 @@
     "import/prefer-default-export": [0],
     "react/no-array-index-key": [0],
     "react/destructuring-assignment": [0],
-    "react/jsx-no-useless-fragment": [0, { "allowExpressions": true }],
     "no-plusplus": [0],
     "react/forbid-prop-types": [0],
     "react-hooks/exhaustive-deps": [0],
@@ -29,6 +28,13 @@
     "no-param-reassign": "off",
     "react/jsx-props-no-spreading": "off",
     "dot-notation": ["off"],
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "function-declaration",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "no-underscore-dangle": ["error", { "enforceInMethodNames": false }],
     "react/sort-comp": ["off"],
     "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],

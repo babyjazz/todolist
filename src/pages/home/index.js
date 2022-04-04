@@ -1,7 +1,22 @@
 import Progress from 'componnets/progress'
-import Selection from 'componnets/selection'
+import Select from 'componnets/select'
 import Task from 'componnets/task'
 import styles from './index.module.scss'
+
+const options = [
+  {
+    label: 'All',
+    value: 'all',
+  },
+  {
+    label: 'Done',
+    value: 'done',
+  },
+  {
+    label: 'Undone',
+    value: 'undone',
+  },
+]
 
 export default function Home() {
   return (
@@ -10,7 +25,7 @@ export default function Home() {
       <div className={styles.task}>
         <div className={styles.header}>
           <p className={styles.title}>Task</p>
-          <Selection />
+          <Select options={options} />
         </div>
         <div className={styles.body}>
           <Task />
