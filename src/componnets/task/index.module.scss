@@ -5,8 +5,8 @@
   align-items: center;
   padding: 0 24px;
   background-color: $white;
-  border-radius: 9999px;
-  height: 46px;
+  border-radius: 30px;
+  min-height: 46px;
   margin-bottom: 17px;
 
   .form {
@@ -35,14 +35,6 @@
       &:hover {
         cursor: pointer;
       }
-    }
-
-    .text_input {
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 19px;
-      color: $black-2;
-      width: 100%;
     }
   }
 

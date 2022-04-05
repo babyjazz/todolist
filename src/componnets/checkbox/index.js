@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styles from './index.module.scss'
 
-export default function Checkbox({ defaultChecked, onClick }) {
+export default function Checkbox({ label, defaultChecked, onClick }) {
   const [checked, setChecked] = useState(defaultChecked)
 
   const handleClick = () => {
@@ -22,18 +22,25 @@ export default function Checkbox({ defaultChecked, onClick }) {
           [styles.active]: checked,
         })}
       />
+      <span
+        className={cx(styles.text_input, {
+          [styles.checked]: checked,
+        })}
+      >
+        {label}
+      </span>
     </div>
   )
 }
 
 Checkbox.defaultProps = {
   defaultChecked: false,
-  //   checked: false,
+  label: null,
   onClick: () => undefined,
 }
 
 Checkbox.propTypes = {
   defaultChecked: PropTypes.bool,
-  //   checked: PropTypes.bool,
+  label: PropTypes.string,
   onClick: PropTypes.func,
 }

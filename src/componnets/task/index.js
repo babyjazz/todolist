@@ -71,10 +71,8 @@ export default function Task({
                 <Checkbox
                   defaultChecked={defaultChecked}
                   onClick={handleToggleCheck}
+                  label={editTodoValue || label}
                 />
-                <span className={styles.text_input}>
-                  {editTodoValue || label}
-                </span>
               </div>
               <Dropdown list={actions}>
                 <MenuIcon />
