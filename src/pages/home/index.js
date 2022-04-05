@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { todoActions, todoSelectors } from 'store/todo'
 import isEmpty from 'lodash/isEmpty'
@@ -25,13 +25,7 @@ const options = [
 export default function Home() {
   const dispatch = useDispatch()
   const { data: todos } = useSelector(todoSelectors.listTodos)
-
-  const removeTodo = useCallback(
-    (value) => {
-      dispatch(todoActions.delete.start(value))
-    },
-    [dispatch],
-  )
+  const [filter, setFilter] = useState('all')
 
   const fetchListTodo = useCallback(
     (data) => {
@@ -40,18 +34,25 @@ export default function Home() {
     [dispatch],
   )
 
-  const updateTodo = useCallback(
-    (value) => {
-      dispatch(todoActions.update.start(value))
+  const removeTodo = useCallback(
+    (data) => {
+      dispatch(todoActions.delete.start({ data, filter }))
     },
-    [dispatch],
+    [dispatch, filter],
+  )
+
+  const updateTodo = useCallback(
+    (data) => {
+      dispatch(todoActions.update.start({ data, filter }))
+    },
+    [dispatch, filter],
   )
 
   const createTodo = useCallback(
-    (value) => {
-      dispatch(todoActions.create.start(value))
+    (data) => {
+      dispatch(todoActions.create.start({ data, filter }))
     },
-    [dispatch],
+    [dispatch, filter],
   )
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function Home() {
     } else if (value === 'undone') {
       params.completed = false
     }
+    setFilter(params)
     fetchListTodo(params)
   }
 

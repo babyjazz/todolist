@@ -7,7 +7,7 @@ const options = {
 const initialStatus = {
   loading: false,
   success: false,
-  data: {},
+  data: [],
   failure: false,
   error: null,
 }
