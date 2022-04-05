@@ -15,6 +15,7 @@ function* listTodoWatcher() {
   yield takeEvery(todoActions.list.start.toString(), listTodo)
   yield takeEvery(todoActions.update.success.toString(), listTodo)
   yield takeEvery(todoActions.create.success.toString(), listTodo)
+  yield takeEvery(todoActions.delete.success.toString(), listTodo)
 }
 
 function* updateTodo(action) {
@@ -43,6 +44,24 @@ function* createTodoWatcher() {
   yield takeEvery(todoActions.create.start.toString(), createTodo)
 }
 
-const todoSagas = { listTodoWatcher, updateTodoWatcher, createTodoWatcher }
+function* deleteTodo(action) {
+  try {
+    const response = yield call(todoApi.deleteTodo, action.payload)
+    yield put(todoActions.delete.success(response))
+  } catch (error) {
+    yield put(todoActions.delete.failure(error))
+  }
+}
+
+function* deleteTodoWatcher() {
+  yield takeEvery(todoActions.delete.start.toString(), deleteTodo)
+}
+
+const todoSagas = {
+  listTodoWatcher,
+  updateTodoWatcher,
+  createTodoWatcher,
+  deleteTodoWatcher,
+}
 
 export default todoSagas

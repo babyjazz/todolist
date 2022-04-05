@@ -1,4 +1,4 @@
-import { get, patch, post } from './api-creator'
+import { get, patch, post, remove } from './api-creator'
 
 function listTodo() {
   return get('/todos')
@@ -12,6 +12,10 @@ function createTodo(data) {
   return post('/todos', data)
 }
 
-const todoApi = { listTodo, updateTodo, createTodo }
+function deleteTodo({ id }) {
+  return remove(`/todos/${id}`)
+}
+
+const todoApi = { listTodo, updateTodo, createTodo, deleteTodo }
 
 export default todoApi

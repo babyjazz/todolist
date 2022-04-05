@@ -6,5 +6,6 @@ export default function* rootSaga() {
     fork(todoSagas.listTodoWatcher),
     fork(todoSagas.updateTodoWatcher),
     fork(todoSagas.createTodoWatcher),
+    fork(todoSagas.deleteTodoWatcher),
   ])
 }

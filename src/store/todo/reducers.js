@@ -29,6 +29,11 @@ export const todoActions = createActions(
       SUCCESS: undefined,
       FAILURE: undefined,
     },
+    DELETE: {
+      START: undefined,
+      SUCCESS: undefined,
+      FAILURE: undefined,
+    },
   },
   options,
 )
@@ -131,7 +136,44 @@ export const todoReducer = handleActions(
         },
       }),
     ],
+    [
+      todoActions.delete.start,
+      (state) => ({
+        ...state,
+        delete: {
+          ...initialStatus,
+          loading: true,
+        },
+      }),
+    ],
+    [
+      todoActions.delete.success,
+      (state, action) => ({
+        ...state,
+        delete: {
+          ...initialStatus,
+          success: true,
+          data: action.payload,
+        },
+      }),
+    ],
+    [
+      todoActions.delete.failure,
+      (state, action) => ({
+        ...state,
+        delete: {
+          ...initialStatus,
+          failure: true,
+          error: action.payload,
+        },
+      }),
+    ],
   ]),
-  { list: initialStatus, update: initialStatus, create: initialStatus },
+  {
+    list: initialStatus,
+    update: initialStatus,
+    create: initialStatus,
+    delete: initialStatus,
+  },
   options,
 )

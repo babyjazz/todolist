@@ -1,68 +1,50 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { MenuIcon } from 'assets/images'
 import Checkbox from 'componnets/checkbox'
 import Dropdown from 'componnets/dropdown'
-import { useDispatch } from 'react-redux'
-import { todoActions } from 'store/todo'
 import styles from './index.module.scss'
 
-export default function Task({ type, id, label, placeholder, defaultChecked }) {
-  const dispatch = useDispatch()
+export default function Task({
+  type,
+  label,
+  placeholder,
+  defaultChecked,
+  onCreate,
+  onEdit,
+  onCheck,
+  onDelete,
+}) {
   const [newTodoValue, setNewTodoValue] = useState()
   const [editTodoValue, setEditTodoValue] = useState()
   const [isEdit, setIsEdit] = useState(false)
-
-  const updateTodo = useCallback(
-    (value) => {
-      dispatch(todoActions.update.start(value))
-    },
-    [dispatch],
-  )
-
-  const createTodo = useCallback(
-    (value) => {
-      dispatch(todoActions.create.start(value))
-    },
-    [dispatch],
-  )
-
-  const handleEdit = () => {
-    setIsEdit(true)
-  }
-
-  const actionConfig = [
+  const actions = [
     {
       key: 'edit',
       label: 'Edit',
-      action: handleEdit,
+      action: () => setIsEdit(true),
     },
     {
       key: 'delete',
       label: 'Delete',
+      action: onDelete,
     },
   ]
 
   const handleSubmitAddTodo = (e) => {
     e.preventDefault()
+    onCreate(newTodoValue)
     setNewTodoValue('')
-    createTodo({ title: newTodoValue, completed: false })
   }
 
   const handleSubmitEditTodo = (e) => {
     e.preventDefault()
-    updateTodo({
-      id,
-      title: editTodoValue,
-    })
+    onEdit(editTodoValue)
     setIsEdit(false)
   }
 
-  const handleToggleCheck = (value) => {
-    updateTodo({
-      id,
-      completed: value,
-    })
+  const handleToggleCheck = (isChecked) => {
+    onCheck(isChecked)
   }
 
   return (
@@ -78,7 +60,7 @@ export default function Task({ type, id, label, placeholder, defaultChecked }) {
                   value={editTodoValue}
                   onChange={(e) => setEditTodoValue(e.target.value)}
                 />
-                <button type="button" className={styles.submit}>
+                <button type="submit" className={styles.submit}>
                   Save
                 </button>
               </form>
@@ -94,14 +76,18 @@ export default function Task({ type, id, label, placeholder, defaultChecked }) {
                   {editTodoValue || label}
                 </span>
               </div>
-              <Dropdown list={actionConfig}>
+              <Dropdown list={actions}>
                 <MenuIcon />
               </Dropdown>
             </>
           )}
         </>
       ) : (
-        <form className={styles.form} onSubmit={handleSubmitAddTodo}>
+        <form
+          className={styles.form}
+          onSubmit={(e) => handleSubmitAddTodo(e)}
+          data-name={isEdit}
+        >
           <input
             value={newTodoValue}
             onChange={(e) => setNewTodoValue(e.target.value)}
@@ -115,17 +101,23 @@ export default function Task({ type, id, label, placeholder, defaultChecked }) {
 }
 
 Task.defaultProps = {
-  id: null,
   label: null,
   type: 'todo',
   placeholder: null,
   defaultChecked: false,
+  onCreate: () => undefined,
+  onEdit: () => undefined,
+  onCheck: () => undefined,
+  onDelete: () => undefined,
 }
 
 Task.propTypes = {
-  id: PropTypes.number,
   label: PropTypes.string,
   type: PropTypes.oneOf(['todo', 'addlist']),
   placeholder: PropTypes.string,
   defaultChecked: PropTypes.bool,
+  onCreate: PropTypes.func,
+  onEdit: PropTypes.func,
+  onCheck: PropTypes.func,
+  onDelete: PropTypes.func,
 }
