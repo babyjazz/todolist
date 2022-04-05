@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import { userReducer } from 'store/user'
+import { todoReducer } from 'store/todo'
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  todo: todoReducer,
 })
 
 export default rootReducer

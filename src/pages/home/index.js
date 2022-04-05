@@ -1,6 +1,10 @@
 import Progress from 'componnets/progress'
 import Select from 'componnets/select'
 import Task from 'componnets/task'
+import { isEmpty } from 'lodash'
+import { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { todoActions, todoSelectors } from 'store/todo'
 import styles from './index.module.scss'
 
 const options = [
@@ -19,6 +23,17 @@ const options = [
 ]
 
 export default function Home() {
+  const dispatch = useDispatch()
+  const { data: todos } = useSelector(todoSelectors.listTodos)
+
+  const fetchListTodo = useCallback(() => {
+    dispatch(todoActions.list.start())
+  }, [dispatch])
+
+  useEffect(() => {
+    fetchListTodo()
+  }, [fetchListTodo])
+
   return (
     <div className={styles.container}>
       <Progress />
@@ -28,7 +43,14 @@ export default function Home() {
           <Select options={options} />
         </div>
         <div className={styles.body}>
-          <Task />
+          {!isEmpty(todos) &&
+            todos.map((todo) => (
+              <Task
+                label={todo?.title}
+                checked={todo?.completed}
+                key={todo?.id}
+              />
+            ))}
           <Task type="addlist" placeholder="Add your todo..." />
         </div>
       </div>

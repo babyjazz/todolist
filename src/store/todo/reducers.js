@@ -1,7 +1,7 @@
 import { handleActions, createActions } from 'redux-actions'
 
 const options = {
-  prefix: 'USER',
+  prefix: 'TODO',
 }
 
 const initialStatus = {
@@ -12,7 +12,7 @@ const initialStatus = {
   error: null,
 }
 
-export const userActions = createActions(
+export const todoActions = createActions(
   {
     LIST: {
       START: undefined,
@@ -23,10 +23,10 @@ export const userActions = createActions(
   options,
 )
 
-export const userReducer = handleActions(
+export const todoReducer = handleActions(
   new Map([
     [
-      userActions.list.start,
+      todoActions.list.start,
       (state) => ({
         ...state,
         list: {
@@ -36,7 +36,7 @@ export const userReducer = handleActions(
       }),
     ],
     [
-      userActions.list.success,
+      todoActions.list.success,
       (state, action) => ({
         ...state,
         list: {
@@ -47,7 +47,7 @@ export const userReducer = handleActions(
       }),
     ],
     [
-      userActions.list.failure,
+      todoActions.list.failure,
       (state, action) => ({
         ...state,
         list: {

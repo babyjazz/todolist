@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects'
-import { userSagas } from 'store/user'
+import { todoSagas } from 'store/todo'
 
 export default function* rootSaga() {
-  yield all([fork(userSagas.listUserWatcher)])
+  yield all([fork(todoSagas.listTodoWatcher)])
 }
