@@ -70,6 +70,19 @@ export default function Home() {
     fetchListTodo(params)
   }
 
+  const handleEdit = (value, todo) => {
+    if (!isEmpty(value)) {
+      updateTodo({
+        id: todo?.id,
+        title: value,
+      })
+    } else {
+      removeTodo({
+        id: todo?.id,
+      })
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Progress dataSource={todos} />
@@ -85,12 +98,7 @@ export default function Home() {
                 key={todo?.id}
                 label={todo?.title}
                 defaultChecked={todo?.completed}
-                onEdit={(value) =>
-                  updateTodo({
-                    id: todo?.id,
-                    title: value,
-                  })
-                }
+                onEdit={(value) => handleEdit(value, todo)}
                 onCheck={(isChecked) =>
                   updateTodo({
                     id: todo?.id,
