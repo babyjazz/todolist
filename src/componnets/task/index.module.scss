@@ -31,6 +31,10 @@
       background: $primary;
       border-radius: 999px;
       margin-right: -16px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     .text_input {

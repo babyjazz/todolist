@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <Progress />
+      <Progress dataSource={todos} />
       <div className={styles.task}>
         <div className={styles.header}>
           <p className={styles.title}>Task</p>

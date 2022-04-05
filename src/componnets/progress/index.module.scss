@@ -21,14 +21,16 @@
       border-radius: 999px;
       background-color: $black-1;
       height: 7.34px;
+      width: 100%;
     }
 
     .progress {
       border-radius: 999px;
       background-color: $white;
       margin-top: -7.34px;
-      width: 200px;
       height: 7.34px;
+
+      transition: width ease-out 0.5s;
     }
   }
 
