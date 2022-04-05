@@ -29,6 +29,7 @@ export default function Home() {
         </div>
         <div className={styles.body}>
           <Task />
+          <Task type="addlist" placeholder="Add your todo..." />
         </div>
       </div>
     </div>
