@@ -9,6 +9,10 @@ body {
   background-color: $gray-2;
   font-size: 16px;
   padding: 42px;
+
+  @include media('<tablet') {
+    padding: 0px;
+  }
 }
 
 code {

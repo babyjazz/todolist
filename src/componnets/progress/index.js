@@ -1,6 +1,5 @@
-/* eslint-disable  */
-import { isEmpty } from 'lodash'
 import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
 import styles from './index.module.scss'
 
 export default function Progress({ dataSource }) {
