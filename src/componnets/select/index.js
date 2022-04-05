@@ -3,7 +3,7 @@ import cx from 'classnames'
 import PropTypes from 'prop-types'
 import styles from './index.module.scss'
 
-export default function Select({ options }) {
+export default function Select({ options, onChange }) {
   const toggleRef = useRef()
   const listRef = useRef()
   const [visible, setVisible] = useState(false)
@@ -33,6 +33,7 @@ export default function Select({ options }) {
   const handleSelectValue = (opt) => {
     setSelected(opt)
     toggleVisible()
+    onChange(opt?.value)
   }
 
   return (
@@ -72,8 +73,10 @@ export default function Select({ options }) {
 
 Select.defaultProps = {
   options: [],
+  onChange: () => undefined,
 }
 
 Select.propTypes = {
   options: PropTypes.array,
+  onChange: PropTypes.func,
 }

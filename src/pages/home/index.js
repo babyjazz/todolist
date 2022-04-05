@@ -33,9 +33,12 @@ export default function Home() {
     [dispatch],
   )
 
-  const fetchListTodo = useCallback(() => {
-    dispatch(todoActions.list.start())
-  }, [dispatch])
+  const fetchListTodo = useCallback(
+    (data) => {
+      dispatch(todoActions.list.start(data))
+    },
+    [dispatch],
+  )
 
   const updateTodo = useCallback(
     (value) => {
@@ -55,13 +58,23 @@ export default function Home() {
     fetchListTodo()
   }, [fetchListTodo])
 
+  const handleFilter = (value) => {
+    const params = {}
+    if (value === 'done') {
+      params.completed = true
+    } else if (value === 'undone') {
+      params.completed = false
+    }
+    fetchListTodo(params)
+  }
+
   return (
     <div className={styles.container}>
       <Progress dataSource={todos} />
       <div className={styles.task}>
         <div className={styles.header}>
           <p className={styles.title}>Task</p>
-          <Select options={options} />
+          <Select options={options} onChange={handleFilter} />
         </div>
         <div className={styles.body}>
           {!isEmpty(todos) &&

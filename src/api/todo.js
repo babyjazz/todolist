@@ -1,7 +1,7 @@
 import { get, patch, post, remove } from './api-creator'
 
-function listTodo() {
-  return get('/todos')
+function listTodo(data) {
+  return get('/todos', data)
 }
 
 function updateTodo({ id, ...data }) {
