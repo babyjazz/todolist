@@ -19,6 +19,16 @@ export const todoActions = createActions(
       SUCCESS: undefined,
       FAILURE: undefined,
     },
+    UPDATE: {
+      START: undefined,
+      SUCCESS: undefined,
+      FAILURE: undefined,
+    },
+    CREATE: {
+      START: undefined,
+      SUCCESS: undefined,
+      FAILURE: undefined,
+    },
   },
   options,
 )
@@ -57,7 +67,71 @@ export const todoReducer = handleActions(
         },
       }),
     ],
+    [
+      todoActions.update.start,
+      (state) => ({
+        ...state,
+        update: {
+          ...initialStatus,
+          loading: true,
+        },
+      }),
+    ],
+    [
+      todoActions.update.success,
+      (state, action) => ({
+        ...state,
+        update: {
+          ...initialStatus,
+          success: true,
+          data: action.payload,
+        },
+      }),
+    ],
+    [
+      todoActions.update.failure,
+      (state, action) => ({
+        ...state,
+        update: {
+          ...initialStatus,
+          failure: true,
+          error: action.payload,
+        },
+      }),
+    ],
+    [
+      todoActions.create.start,
+      (state) => ({
+        ...state,
+        create: {
+          ...initialStatus,
+          loading: true,
+        },
+      }),
+    ],
+    [
+      todoActions.create.success,
+      (state, action) => ({
+        ...state,
+        create: {
+          ...initialStatus,
+          success: true,
+          data: action.payload,
+        },
+      }),
+    ],
+    [
+      todoActions.create.failure,
+      (state, action) => ({
+        ...state,
+        create: {
+          ...initialStatus,
+          failure: true,
+          error: action.payload,
+        },
+      }),
+    ],
   ]),
-  { list: initialStatus },
+  { list: initialStatus, update: initialStatus, create: initialStatus },
   options,
 )

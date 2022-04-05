@@ -28,6 +28,7 @@
     "no-param-reassign": "off",
     "react/jsx-props-no-spreading": "off",
     "dot-notation": ["off"],
+    "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
     "react/function-component-definition": [
       2,
       {

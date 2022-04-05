@@ -46,8 +46,9 @@ export default function Home() {
           {!isEmpty(todos) &&
             todos.map((todo) => (
               <Task
+                id={todo?.id}
                 label={todo?.title}
-                checked={todo?.completed}
+                defaultChecked={todo?.completed}
                 key={todo?.id}
               />
             ))}

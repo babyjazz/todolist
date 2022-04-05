@@ -1,15 +1,31 @@
-/* eslint-disable  */
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { MenuIcon } from 'assets/images'
 import Checkbox from 'componnets/checkbox'
 import Dropdown from 'componnets/dropdown'
+import { useDispatch } from 'react-redux'
+import { todoActions } from 'store/todo'
 import styles from './index.module.scss'
 
-export default function Task({ type, label, placeholder, checked }) {
+export default function Task({ type, id, label, placeholder, defaultChecked }) {
+  const dispatch = useDispatch()
   const [newTodoValue, setNewTodoValue] = useState()
   const [editTodoValue, setEditTodoValue] = useState()
   const [isEdit, setIsEdit] = useState(false)
+
+  const updateTodo = useCallback(
+    (value) => {
+      dispatch(todoActions.update.start(value))
+    },
+    [dispatch],
+  )
+
+  const createTodo = useCallback(
+    (value) => {
+      dispatch(todoActions.create.start(value))
+    },
+    [dispatch],
+  )
 
   const handleEdit = () => {
     setIsEdit(true)
@@ -29,16 +45,24 @@ export default function Task({ type, label, placeholder, checked }) {
 
   const handleSubmitAddTodo = (e) => {
     e.preventDefault()
-    // TODO implement API submit here
-    console.log('TODO submit here', newTodoValue)
     setNewTodoValue('')
+    createTodo({ title: newTodoValue, completed: false })
   }
 
   const handleSubmitEditTodo = (e) => {
     e.preventDefault()
-    // TODO implement API submit here
-    console.log('TODO submit edit here', editTodoValue)
+    updateTodo({
+      id,
+      title: editTodoValue,
+    })
     setIsEdit(false)
+  }
+
+  const handleToggleCheck = (value) => {
+    updateTodo({
+      id,
+      completed: value,
+    })
   }
 
   return (
@@ -51,16 +75,24 @@ export default function Task({ type, label, placeholder, checked }) {
                 <input
                   defaultValue={label}
                   className={styles.input}
+                  value={editTodoValue}
                   onChange={(e) => setEditTodoValue(e.target.value)}
                 />
-                <button className={styles.submit}>Save</button>
+                <button type="button" className={styles.submit}>
+                  Save
+                </button>
               </form>
             </div>
           ) : (
             <>
               <div className={styles.checkbox_container}>
-                <Checkbox checked={checked} />
-                <span className={styles.text_input}>{label}</span>
+                <Checkbox
+                  defaultChecked={defaultChecked}
+                  onClick={handleToggleCheck}
+                />
+                <span className={styles.text_input}>
+                  {editTodoValue || label}
+                </span>
               </div>
               <Dropdown list={actionConfig}>
                 <MenuIcon />
@@ -83,15 +115,17 @@ export default function Task({ type, label, placeholder, checked }) {
 }
 
 Task.defaultProps = {
+  id: null,
   label: null,
   type: 'todo',
   placeholder: null,
-  checked: false,
+  defaultChecked: false,
 }
 
 Task.propTypes = {
+  id: PropTypes.number,
   label: PropTypes.string,
   type: PropTypes.oneOf(['todo', 'addlist']),
   placeholder: PropTypes.string,
-  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
 }
